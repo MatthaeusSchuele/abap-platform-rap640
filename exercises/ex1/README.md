@@ -843,39 +843,39 @@ CLASS zcl_wrap_purchase_req_bapi_### IMPLEMENTATION.
 
       APPEND pritemx_line TO pritemx.
 
-*      IF use_conversions = abap_true.
-*
-*        TRY.
-*
-*            zcl_conversion_ext_int=>get_instance( )->currency_amount_int_to_ext(
-*              EXPORTING
-*                currency    = <pritem_line>-Currency
-*                sap_amount  = CONV #( <pritem_line>-preq_price )
-*              IMPORTING
-*                bapi_amount = DATA(bapi_amount)
-*            ).
-*
-*            zcl_conversion_ext_int=>get_instance( )->currency_code_int_to_ext(
-*              EXPORTING
-*                sap_code = <pritem_line>-Currency
-*              IMPORTING
-*                iso_code = DATA(bapi_currency)
-*            ).
-*
-*            <pritem_line>-preq_price = bapi_amount.
-*            <pritem_line>-Currency = bapi_currency.
-*
-*          CATCH zcx_conversion_ext_int INTO DATA(conversion_exception).
-*
-*            conversion_message_line-id = conversion_exception->if_t100_message~t100key-msgid.
-*            conversion_message_line-number = conversion_exception->if_t100_message~t100key-msgno.
-*            conversion_message_line-type = if_abap_behv_message=>severity-warning.
-*            conversion_message_line-message_v1 = conversion_exception->attr1.
-*            conversion_message_line-message_v2 = conversion_exception->attr2.
-*            APPEND conversion_message_line TO conversion_messages.
-*
-*        ENDTRY.
-*      ENDIF.
+      IF use_conversions = abap_true.
+
+        TRY.
+
+            zcl_conversion_ext_int=>get_instance( )->currency_amount_int_to_ext(
+              EXPORTING
+                currency    = <pritem_line>-Currency
+                sap_amount  = CONV #( <pritem_line>-preq_price )
+              IMPORTING
+                bapi_amount = DATA(bapi_amount)
+            ).
+
+            zcl_conversion_ext_int=>get_instance( )->currency_code_int_to_ext(
+              EXPORTING
+                sap_code = <pritem_line>-Currency
+              IMPORTING
+                iso_code = DATA(bapi_currency)
+            ).
+
+            <pritem_line>-preq_price = bapi_amount.
+            <pritem_line>-Currency = bapi_currency.
+
+          CATCH zcx_conversion_ext_int INTO DATA(conversion_exception).
+
+            conversion_message_line-id = conversion_exception->if_t100_message~t100key-msgid.
+            conversion_message_line-number = conversion_exception->if_t100_message~t100key-msgno.
+            conversion_message_line-type = if_abap_behv_message=>severity-warning.
+            conversion_message_line-message_v1 = conversion_exception->attr1.
+            conversion_message_line-message_v2 = conversion_exception->attr2.
+            APPEND conversion_message_line TO conversion_messages.
+
+        ENDTRY.
+      ENDIF.
     ENDLOOP.
 
     TRY.
