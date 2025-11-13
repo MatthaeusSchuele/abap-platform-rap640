@@ -118,7 +118,7 @@ Copy and paste the following code into your previously created interface:
 
 ```ABAP
 
-      INTERFACE zif_wrap_bapi_pr_create_###
+      INTERFACE ZIF_WRAP_BAPI_PR_###
       PUBLIC.
 
       TYPES:
@@ -508,7 +508,7 @@ Copy and paste the following code into your previously created interface:
 ```
 </details>
 
-**Create the wrapper interface**
+**Create the wrapper factory class**
 
 Next, create the wrapper factory class. Right click on your package `ZTIER2_###` and select **New > ABAP Class** and input the Name `ZCL_F_WRAP_BAPI_PR_###`:
 
@@ -518,7 +518,7 @@ Copy and paste the following code into your previously created factory class:
   <summary>🟡📄 Click to expand and view or copy the source code!</summary>
 
 ```ABAP
-  CLASS zcl_bapi_wrap_factory_### DEFINITION
+  CLASS ZCL_F_WRAP_BAPI_PR_### DEFINITION
     PUBLIC
     FINAL
     CREATE PRIVATE.
@@ -529,20 +529,20 @@ Copy and paste the following code into your previously created factory class:
         IMPORTING
           !destination  TYPE rfcdest OPTIONAL
         RETURNING
-          VALUE(result) TYPE REF TO zif_wrap_bapi_pr_create_###.
+          VALUE(result) TYPE REF TO ZIF_WRAP_BAPI_PR_###.
     PROTECTED SECTION.
     PRIVATE SECTION.
 
       METHODS constructor.
   ENDCLASS.
 
-  CLASS zcl_bapi_wrap_factory_### IMPLEMENTATION.
+  CLASS ZCL_F_WRAP_BAPI_PR_### IMPLEMENTATION.
 
     METHOD constructor.
     ENDMETHOD.
 
     METHOD create_instance.
-      result = NEW zcl_bapi_pr_wrapper_###( destination = destination  ).
+      result = NEW ZCL_WRAP_BAPI_PR_###( destination = destination  ).
     ENDMETHOD.
   ENDCLASS.  
 ```
@@ -560,16 +560,16 @@ Copy and paste the following code into your previously created wrapper class:
   <summary>🟡📄 Click to expand and view or copy the source code!</summary>
 
 ```ABAP
- CLASS zcl_bapi_pr_wrapper_### DEFINITION
+ CLASS ZCL_WRAP_BAPI_PR_### DEFINITION
     PUBLIC
     CREATE PRIVATE
 
-    GLOBAL FRIENDS zcl_bapi_wrap_factory_### .
+    GLOBAL FRIENDS ZCL_F_WRAP_BAPI_PR_###.
 
     PUBLIC SECTION.
 
 
-      INTERFACES zif_wrap_bapi_pr_create_### .
+      INTERFACES ZIF_WRAP_BAPI_PR_###.
     PROTECTED SECTION.
 
       DATA destination TYPE rfcdest .
@@ -577,19 +577,19 @@ Copy and paste the following code into your previously created wrapper class:
 
       METHODS call_bapi_pr_create
         IMPORTING
-          !prheader     TYPE zif_wrap_bapi_pr_create_###~bapimereqheader OPTIONAL
-          !prheaderx    TYPE zif_wrap_bapi_pr_create_###~bapimereqheaderx OPTIONAL
-          !testrun      TYPE zif_wrap_bapi_pr_create_###~char1 OPTIONAL
+          !prheader     TYPE ZIF_WRAP_BAPI_PR_###~bapimereqheader OPTIONAL
+          !prheaderx    TYPE ZIF_WRAP_BAPI_PR_###~bapimereqheaderx OPTIONAL
+          !testrun      TYPE ZIF_WRAP_BAPI_PR_###~char1 OPTIONAL
         EXPORTING
           !number       TYPE banfn
-          !prheaderexp  TYPE zif_wrap_bapi_pr_create_###~bapimereqheader
+          !prheaderexp  TYPE ZIF_WRAP_BAPI_PR_###~bapimereqheader
         CHANGING
-          !extensionin  TYPE zif_wrap_bapi_pr_create_###~_bapiparex OPTIONAL
-          !extensionout TYPE zif_wrap_bapi_pr_create_###~_bapiparex OPTIONAL
-          !praccountx   TYPE zif_wrap_bapi_pr_create_###~_bapimereqaccountx OPTIONAL
-          !pritem       TYPE zif_wrap_bapi_pr_create_###~_bapimereqitemimp
-          !pritemx      TYPE zif_wrap_bapi_pr_create_###~_bapimereqitemx OPTIONAL
-          !return       TYPE zif_wrap_bapi_pr_create_###~_bapiret2 OPTIONAL
+          !extensionin  TYPE ZIF_WRAP_BAPI_PR_###~_bapiparex OPTIONAL
+          !extensionout TYPE ZIF_WRAP_BAPI_PR_###~_bapiparex OPTIONAL
+          !praccountx   TYPE ZIF_WRAP_BAPI_PR_###~_bapimereqaccountx OPTIONAL
+          !pritem       TYPE ZIF_WRAP_BAPI_PR_###~_bapimereqitemimp
+          !pritemx      TYPE ZIF_WRAP_BAPI_PR_###~_bapimereqitemx OPTIONAL
+          !return       TYPE ZIF_WRAP_BAPI_PR_###~_bapiret2 OPTIONAL
 
         RAISING
           cx_root.
@@ -599,7 +599,7 @@ Copy and paste the following code into your previously created wrapper class:
           !destination TYPE rfcdest .
   ENDCLASS.
 
-  CLASS zcl_bapi_pr_wrapper_### IMPLEMENTATION.
+  CLASS ZCL_WRAP_BAPI_PR_### IMPLEMENTATION.
 
 
     METHOD call_bapi_pr_create.
@@ -625,7 +625,7 @@ Copy and paste the following code into your previously created wrapper class:
       me->destination = destination.
     ENDMETHOD.
 
-    METHOD zif_wrap_bapi_pr_create_###~bapi_pr_create.
+    METHOD ZIF_WRAP_BAPI_PR_###~bapi_pr_create.
       TRY.
           me->call_bapi_pr_create(
           EXPORTING
