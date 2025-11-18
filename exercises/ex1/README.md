@@ -672,9 +672,35 @@ Now it should be possible to active both, the wrapper class and the factory clas
       
 </details>
 
-## Step 5: Test the technical wrapper class with console application in ABAP for cloud development
+## Step 5: Release the wrapper interface and factory class
 
-The wrapper you just created is released for consumption in ABAP for cloud development. You can test this by creating a console application in ABAP for cloud development to call the wrapper. 
+Now you need to release the wrapper interface and wrapper factory class for consumption in ABAP Cloud Development. To do this, you need to add a Release Contract (C1) to both objects for use system-internally (Contract C1).
+
+In your Project Explorer open the ABAP Interface you created. In the **Properties** tab click on the **API State** tab and then click on the green plus icon next to the Use System-Internally (Contract C1).
+
+<img alt="C1 Release Interface" src="images/C1_Release_Interface.png" width="70%">
+
+Make sure the **Release State** is set to **Released** and check the option **Use in Cloud Development**:
+
+<img alt="Set release state" src="images/C1_Release_Interface_Set_Release_State.png" width="70%">
+
+Click on Next. The changes will be validated. No issues should arise.
+Click on Next and then click on Finish.
+
+The API State tab will now show the new Release State:
+
+<img alt="C1 Released Interface" src="images/C1_Released_Interface.png" width="70%">
+
+Repeat the same steps to release the factory class you created:
+
+<img alt="C1 Release Factory" src="images/C1_Released_Factory.png" width="70%">
+
+>You will not release the wrapper class.
+
+
+## Step 6: Test the technical wrapper class with console application in ABAP for cloud development
+
+The wrapper you just created is now released for consumption in ABAP for cloud development. You can test this by creating a console application in ABAP for cloud development to call the wrapper. 
 
 We will use this class that calls the wrapper also to add a conversion functionality and to simplify the signature of the method that is used to create a purchase requistion as well. 
 
@@ -922,7 +948,7 @@ ENDCLASS.
 
 
 
-## Step 6: Understand conversion problems
+## Step 7: Understand conversion problems
 
 ### Introduction
 
@@ -970,7 +996,7 @@ As a result the value stored in the purchase requisition would be `1 JPY` instea
   
 </details>   
 
-## Step 7: Fix conversion problem using released conversion class
+## Step 8: Fix conversion problem using released conversion class
 
 Navigate to the method `bapi_pr_create()` in your wrapper class `zcl_wrap_purchase_req_bapi_###`.    
 
